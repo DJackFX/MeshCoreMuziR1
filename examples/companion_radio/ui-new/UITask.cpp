@@ -782,7 +782,15 @@ void UITask::loop() {
 #endif
 #if defined(PIN_USER_BTN_ANA)
   if (abs(millis() - _analogue_pin_read_millis) > 10) {
-    int ev = analog_btn.check();
+        int ev = analog_btn.check();
+#if defined(BTN_POWER_OFF_ONLY)
+    if (ev == BUTTON_EVENT_LONG_PRESS && millis() - ui_started_at > 8000) {
+      _pending_power_off = true;
+    }
+    if (_pending_power_off && !analog_btn.isPressed()) {
+      shutdown();
+    }
+#else
     if (ev == BUTTON_EVENT_CLICK) {
       c = checkDisplayOn(KEY_NEXT);
     } else if (ev == BUTTON_EVENT_LONG_PRESS) {
@@ -792,6 +800,7 @@ void UITask::loop() {
     } else if (ev == BUTTON_EVENT_TRIPLE_CLICK) {
       c = handleTripleClick(KEY_SELECT);
     }
+#endif
     _analogue_pin_read_millis = millis();
   }
 #endif
