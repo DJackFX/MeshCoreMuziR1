@@ -379,7 +379,6 @@ void NRF52Board::shutdownPeripherals() {
   digitalWrite(LED_GREEN, LOW);
 #endif
 }
-}
 
 void NRF52Board::powerOff() {
   shutdownPeripherals();
