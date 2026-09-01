@@ -11,7 +11,8 @@ jobs:
           python-version: '3.13'
       - run: pip install --upgrade platformio
       - run: pio run -e RAK_4631_companion_radio_ble
+      - run: python3 bin/uf2conv/uf2conv.py .pio/build/RAK_4631_companion_radio_ble/firmware.hex -c -o firmware.uf2 -f 0xADA52840
       - uses: actions/upload-artifact@v7
         with:
           name: r1-firmware
-          path: .pio/build/RAK_4631_companion_radio_ble/*.uf2
+          path: firmware.uf2
