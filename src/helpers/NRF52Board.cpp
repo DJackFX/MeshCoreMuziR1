@@ -365,9 +365,20 @@ void NRF52Board::shutdownPeripherals() {
     nRFCrypto.end();
 #endif
 
-  // Flush serial buffers
+    // Flush serial buffers
   Serial.flush();
   delay(100);
+
+  // nRF52 retains GPIO state in SYSTEMOFF, so explicitly park the LEDs off
+#ifdef LED_BLUE
+  pinMode(LED_BLUE, OUTPUT);
+  digitalWrite(LED_BLUE, LOW);
+#endif
+#ifdef LED_GREEN
+  pinMode(LED_GREEN, OUTPUT);
+  digitalWrite(LED_GREEN, LOW);
+#endif
+}
 }
 
 void NRF52Board::powerOff() {
