@@ -46,6 +46,9 @@ class UITask : public AbstractUITask {
 
 #ifdef PIN_USER_BTN_ANA
   unsigned long _analogue_pin_read_millis = millis();
+#if defined(BTN_POWER_OFF_ONLY)
+  bool _pending_power_off = false;
+#endif
 #endif
 
   UIScreen* splash;
