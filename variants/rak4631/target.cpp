@@ -13,7 +13,10 @@ RAK4631Board board;
   MomentaryButton user_btn(PIN_USER_BTN, 1000, true, true);
 
   #if defined(PIN_USER_BTN_ANA)
-  MomentaryButton analog_btn(PIN_USER_BTN_ANA, 1000, 20);
+    #ifndef USER_BTN_LONG_PRESS_MS
+    #define USER_BTN_LONG_PRESS_MS 1000
+  #endif
+  MomentaryButton analog_btn(PIN_USER_BTN_ANA, USER_BTN_LONG_PRESS_MS, 20);
   #endif
 #endif
 
